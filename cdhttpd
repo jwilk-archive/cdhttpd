@@ -1,0 +1,26 @@
+#!/usr/bin/python3
+
+import http.server
+import io
+
+class RequestHandler(http.server.BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        self.send_response(200)
+        print(self.path)
+        if 'relative' in self.path:
+            fname = '../../../../../../tmp/moo'
+        else:
+            fname = '/tmp/moo'
+        if '%' in self.path:
+            cdv = 'attachment'
+        else:
+            cdv = 'attachment; filename="{fname}"'.format(fname=fname)
+        self.send_header('Content-Disposition', cdv)
+        self.end_headers()
+        self.wfile.write(b'moo\n')
+
+if __name__ == '__main__':
+    http.server.test(RequestHandler)
+
+# vim:ts=4 sw=4 et
