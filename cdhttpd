@@ -9,7 +9,6 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
         self.send_response(200)
-        print(self.path)
         if 'relative' in self.path:
             fname = '../../../../../../tmp/moo'
         else:
